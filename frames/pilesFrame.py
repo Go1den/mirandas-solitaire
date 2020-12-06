@@ -7,52 +7,50 @@ class PilesFrame:
         self.frame = Frame(parent.window)
         self.parent = parent
 
-        self.blankImage = ImageTk.PhotoImage(Image.open("cards/red_back.png"))
+        self.cardBackImage = ImageTk.PhotoImage(Image.open("cards/red_back.png"))
+        self.blankImage = ImageTk.PhotoImage(Image.open("cards/blank.png"))
 
-        self.labelPile1 = None
-        self.labelPile2 = None
-        self.labelPile3 = None
-        self.labelPile4 = None
-        self.labelPile5 = None
-        self.labelPile6 = None
-        self.labelPile7 = None
-        self.labelPile8 = None
-        self.labelPile9 = None
-        self.labelPile10 = None
+        self.labels = []
         self.labelDrawPile = None
-        self.labelPile11 = None
-        self.labelPile12 = None
-        self.labelPile13 = None
 
         self.initializeFrame()
 
     def initializeFrame(self):
-        self.labelPile1 = Label(self.frame, image=self.blankImage)
-        self.labelPile1.grid(row=0, column=0, padx=8, pady=8)
-        self.labelPile2 = Label(self.frame, image=self.blankImage)
-        self.labelPile2.grid(row=0, column=1, padx=8, pady=8)
-        self.labelPile3 = Label(self.frame, image=self.blankImage)
-        self.labelPile3.grid(row=0, column=2, padx=8, pady=8)
-        self.labelPile4 = Label(self.frame, image=self.blankImage)
-        self.labelPile4.grid(row=0, column=3, padx=8, pady=8)
-        self.labelPile5 = Label(self.frame, image=self.blankImage)
-        self.labelPile5.grid(row=0, column=4, padx=8, pady=8)
-        self.labelPile6 = Label(self.frame, image=self.blankImage)
-        self.labelPile6.grid(row=0, column=5, padx=8, pady=8)
-        self.labelPile7 = Label(self.frame, image=self.blankImage)
-        self.labelPile7.grid(row=0, column=6, padx=8, pady=8)
-
-        self.labelPile8 = Label(self.frame, image=self.blankImage)
-        self.labelPile8.grid(row=1, column=0, padx=8, pady=8)
-        self.labelPile9 = Label(self.frame, image=self.blankImage)
-        self.labelPile9.grid(row=1, column=1, padx=8, pady=8)
-        self.labelPile10 = Label(self.frame, image=self.blankImage)
-        self.labelPile10.grid(row=1, column=2, padx=8, pady=8)
-        self.labelDrawPile = Label(self.frame, image=self.blankImage)
+        pile = 0
+        for x in range(1, 8):
+            pile += 1
+            label = Label(self.frame, image=self.parent.playArea.piles[x][-1].image)
+            label.bind("<Button-1>", self.onPileClick)
+            label.grid(row=0, column=x - 1, padx=8, pady=8)
+            self.labels.append(label)
+        for x in range(8, 11):
+            pile += 1
+            label = Label(self.frame, image=self.parent.playArea.piles[x][-1].image)
+            label.bind("<Button-1>", self.onPileClick)
+            label.grid(row=1, column=x - 8, padx=8, pady=8)
+            self.labels.append(label)
+        self.labelDrawPile = Label(self.frame, image=self.cardBackImage)
         self.labelDrawPile.grid(row=1, column=3, padx=8, pady=8)
-        self.labelPile11 = Label(self.frame, image=self.blankImage)
-        self.labelPile11.grid(row=1, column=4, padx=8, pady=8)
-        self.labelPile12 = Label(self.frame, image=self.blankImage)
-        self.labelPile12.grid(row=1, column=5, padx=8, pady=8)
-        self.labelPile13 = Label(self.frame, image=self.blankImage)
-        self.labelPile13.grid(row=1, column=6, padx=8, pady=8)
+        for x in range(11, 14):
+            pile += 1
+            label = Label(self.frame, image=self.parent.playArea.piles[x][-1].image)
+            label.bind("<Button-1>", self.onPileClick)
+            label.grid(row=1, column=x - 7, padx=8, pady=8)
+            self.labels.append(label)
+
+    def onPileClick(self, e):
+        pile = self.labels.index(e.widget) + 1
+        if 0 < pile < 14:
+            self.parent.playArea.playCardFromPile(pile)
+            self.updatePileImage(pile)
+            self.parent.playedFrameAsc.updateAllImages()
+            self.parent.playedFrameDesc.updateAllImages()
+
+    def updateAllImages(self):
+        index = 0
+        for label in self.labels:
+            index += 1
+            label.configure(image=self.parent.playArea.piles[index][-1].image)
+
+    def updatePileImage(self, pile):
+        self.labels[pile-1].configure(image=self.parent.playArea.piles[pile][-1].image)

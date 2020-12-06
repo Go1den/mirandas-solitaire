@@ -1,14 +1,20 @@
 import sys
 from tkinter import Tk, Frame, Menu, W, E
 
+from deck import Deck
 from frames.pilesFrame import PilesFrame
 from frames.playedFrameAsc import PlayedFrameAsc
 from frames.playedFrameDesc import PlayedFrameDesc
+from playArea import PlayArea
 
 class MainWindow:
     def __init__(self):
         self.window = Tk()
         self.window.withdraw()
+
+        self.deck = None
+        self.playArea = None
+        self.startNewGame()
 
         self.playedFrameAsc = PlayedFrameAsc(self)
         self.playedFrameDesc = PlayedFrameDesc(self)
@@ -43,4 +49,12 @@ class MainWindow:
 
     def closeWindow(self):
         sys.exit(0)
+
+    def startNewGame(self):
+        self.deck = Deck()
+        self.deck.shuffle()
+        self.playArea = PlayArea()
+        self.playArea.deal(self.deck)
+
+
 
