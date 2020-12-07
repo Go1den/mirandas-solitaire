@@ -1,10 +1,12 @@
 from copy import copy
+from typing import List
 
 from card import Card
 from deck import Deck
 
 class PlayArea:
     def __init__(self):
+        self.currentPile = 0
         self.piles = {
             1: [],
             2: [],
@@ -31,6 +33,14 @@ class PlayArea:
             "descC": [Card(14, "C")],
             "descS": [Card(14, "S")]
         }
+
+    def draw(self) -> List[Card]:
+        if len(self.drawPile) > 0:
+            card = self.drawPile.pop()
+            self.piles[card.rank].insert(0, card)
+            return self.piles[card.rank]
+        else:
+            return []
 
     def deal(self, deck: Deck):
         pileIndex = 1
@@ -65,6 +75,22 @@ class PlayArea:
             print(card.toString())
 
         print("Total cards: " + str(totalCards))
+
+    def playCardFromCurrentPile(self, index) -> bool:
+        if len(self.piles[self.currentPile]) > 0:
+            card = self.piles[self.currentPile][index]
+            ascCard = self.scorePiles["asc" + card.suit][-1]
+            if card.rank - 1 == ascCard.rank:
+                print("Asc card is playable")
+                self.scorePiles["asc" + card.suit].append(self.piles[self.currentPile].pop(index))
+                return True
+            else:
+                descCard = self.scorePiles["desc" + card.suit][-1]
+                if card.rank + 1 == descCard.rank:
+                    print("Desc card is playable")
+                    self.scorePiles["desc" + card.suit].append(self.piles[self.currentPile].pop(index))
+                    return True
+        return False
 
     def playCardFromPile(self, pile):
         if len(self.piles[pile]) > 0:

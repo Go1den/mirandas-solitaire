@@ -1,10 +1,10 @@
-from tkinter import Frame, Label
+from tkinter import Frame, Label, GROOVE
 
 from PIL import ImageTk, Image
 
 class PlayedFrameAsc:
     def __init__(self, parent):
-        self.frame = Frame(parent.window)
+        self.frame = Frame(parent.playedFrame, relief=GROOVE, bd=2)
         self.parent = parent
 
         self.loHeartImage = ImageTk.PhotoImage(Image.open("cards/0H.png"))

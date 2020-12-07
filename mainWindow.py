@@ -1,7 +1,8 @@
 import sys
-from tkinter import Tk, Frame, Menu, W, E
+from tkinter import Tk, Frame, Menu, W, E, EW, NSEW
 
 from deck import Deck
+from frames.currentPileFrame import CurrentPileFrame
 from frames.pilesFrame import PilesFrame
 from frames.playedFrameAsc import PlayedFrameAsc
 from frames.playedFrameDesc import PlayedFrameDesc
@@ -16,10 +17,11 @@ class MainWindow:
         self.playArea = None
         self.startNewGame()
 
+        self.playedFrame = Frame(self.window)
         self.playedFrameAsc = PlayedFrameAsc(self)
         self.playedFrameDesc = PlayedFrameDesc(self)
         self.pilesFrame = PilesFrame(self)
-        self.currentPileFrame = Frame(self.window)
+        self.currentPileFrame = CurrentPileFrame(self)
 
         self.initializeWindow()
         self.gridFrames()
@@ -33,10 +35,11 @@ class MainWindow:
         self.window.resizable(width=False, height=False)
 
     def gridFrames(self):
-        self.playedFrameAsc.frame.grid(row=0, column=0, sticky=W)
-        self.playedFrameDesc.frame.grid(row=0, column=1, sticky=E)
-        self.pilesFrame.frame.grid(row=1, column=0, columnspan=2)
-        self.currentPileFrame.grid(row=2, column=0, columnspan=2)
+        self.playedFrameAsc.frame.grid(row=0, column=0, padx=(0, 232), sticky=EW)
+        self.playedFrameDesc.frame.grid(row=0, column=1, padx=(232, 0), sticky=EW)
+        self.playedFrame.grid(row=0, column=0, padx=4, pady=4, sticky=EW)
+        self.pilesFrame.frame.grid(row=1, column=0, padx=4, pady=4, sticky=NSEW)
+        self.currentPileFrame.frame.grid(row=2, column=0, padx=4, pady=4, sticky=EW)
 
     def addMenu(self):
         menu = Menu(self.window)
