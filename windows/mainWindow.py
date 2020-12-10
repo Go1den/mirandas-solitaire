@@ -1,5 +1,5 @@
 import sys
-from tkinter import Tk, Frame, Menu, W, E, EW, NSEW
+from tkinter import Tk, Frame, Menu, EW, NSEW
 
 from deck import Deck
 from frames.currentPileFrame import CurrentPileFrame
@@ -56,7 +56,7 @@ class MainWindow:
     def startNewGame(self):
         self.deck = Deck()
         self.deck.shuffle()
-        self.playArea = PlayArea()
+        self.playArea = PlayArea(self)
         self.playArea.deal(self.deck)
 
 

@@ -3,9 +3,12 @@ from typing import List
 
 from card import Card
 from deck import Deck
+from windows.whichPileWindow import WhichPileWindow
 
 class PlayArea:
-    def __init__(self):
+    def __init__(self, parent):
+        self.parent = parent
+        self.selectedPile = 0
         self.currentPile = 0
         self.piles = {
             1: [],
@@ -80,31 +83,54 @@ class PlayArea:
         if len(self.piles[self.currentPile]) > 0:
             card = self.piles[self.currentPile][index]
             ascCard = self.scorePiles["asc" + card.suit][-1]
+            descCard = self.scorePiles["desc" + card.suit][-1]
             if card.rank - 1 == ascCard.rank:
-                print("Asc card is playable")
-                self.scorePiles["asc" + card.suit].append(self.piles[self.currentPile].pop(index))
-                return True
+                if card.rank + 1 == descCard.rank:
+                    self.selectedPile = 0
+                    WhichPileWindow(ascCard, descCard, self.parent)
+                    if self.selectedPile == 1:
+                        print("You chose asc pile")
+                        self.scorePiles["asc" + card.suit].append(self.piles[self.currentPile].pop(index))
+                        return True
+                    elif self.selectedPile == 2:
+                        print("You chose desc pile")
+                        self.scorePiles["desc" + card.suit].append(self.piles[self.currentPile].pop(index))
+                        return True
+                else:
+                    print("Asc card is playable")
+                    self.scorePiles["asc" + card.suit].append(self.piles[self.currentPile].pop(index))
+                    return True
             else:
-                descCard = self.scorePiles["desc" + card.suit][-1]
                 if card.rank + 1 == descCard.rank:
                     print("Desc card is playable")
                     self.scorePiles["desc" + card.suit].append(self.piles[self.currentPile].pop(index))
                     return True
         return False
 
-    def playCardFromPile(self, pile):
+    def playCardFromPile(self, pile) -> bool:
         if len(self.piles[pile]) > 0:
             card = self.piles[pile][-1]
             ascCard = self.scorePiles["asc" + card.suit][-1]
+            descCard = self.scorePiles["desc" + card.suit][-1]
             if card.rank - 1 == ascCard.rank:
-                print("Asc card is playable")
-                self.scorePiles["asc" + card.suit].append(self.piles[pile].pop())
-                for card in self.scorePiles["asc" + card.suit]:
-                    print(card.toString())
+                if card.rank + 1 == descCard.rank:
+                    self.selectedPile = 0
+                    WhichPileWindow(ascCard, descCard, self.parent)
+                    if self.selectedPile == 1:
+                        print("You chose asc pile")
+                        self.scorePiles["asc" + card.suit].append(self.piles[pile].pop())
+                        return True
+                    elif self.selectedPile == 2:
+                        print("You chose desc pile")
+                        self.scorePiles["desc" + card.suit].append(self.piles[pile].pop())
+                        return True
+                else:
+                    print("Asc card is playable")
+                    self.scorePiles["asc" + card.suit].append(self.piles[pile].pop())
+                    return True
             else:
-                descCard = self.scorePiles["desc" + card.suit][-1]
                 if card.rank + 1 == descCard.rank:
                     print("Desc card is playable")
                     self.scorePiles["desc" + card.suit].append(self.piles[pile].pop())
-                    for card in self.scorePiles["desc" + card.suit]:
-                        print(card.toString())
+                    return True
+        return False

@@ -1,4 +1,4 @@
-from mainWindow import MainWindow
+from windows.mainWindow import MainWindow
 
 mainWindow = MainWindow()
 
