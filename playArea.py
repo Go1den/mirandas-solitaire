@@ -89,20 +89,16 @@ class PlayArea:
                     self.selectedPile = 0
                     WhichPileWindow(ascCard, descCard, self.parent)
                     if self.selectedPile == 1:
-                        print("You chose asc pile")
                         self.scorePiles["asc" + card.suit].append(self.piles[self.currentPile].pop(index))
                         return True
                     elif self.selectedPile == 2:
-                        print("You chose desc pile")
                         self.scorePiles["desc" + card.suit].append(self.piles[self.currentPile].pop(index))
                         return True
                 else:
-                    print("Asc card is playable")
                     self.scorePiles["asc" + card.suit].append(self.piles[self.currentPile].pop(index))
                     return True
             else:
                 if card.rank + 1 == descCard.rank:
-                    print("Desc card is playable")
                     self.scorePiles["desc" + card.suit].append(self.piles[self.currentPile].pop(index))
                     return True
         return False
@@ -117,20 +113,16 @@ class PlayArea:
                     self.selectedPile = 0
                     WhichPileWindow(ascCard, descCard, self.parent)
                     if self.selectedPile == 1:
-                        print("You chose asc pile")
                         self.scorePiles["asc" + card.suit].append(self.piles[pile].pop())
                         return True
                     elif self.selectedPile == 2:
-                        print("You chose desc pile")
                         self.scorePiles["desc" + card.suit].append(self.piles[pile].pop())
                         return True
                 else:
-                    print("Asc card is playable")
                     self.scorePiles["asc" + card.suit].append(self.piles[pile].pop())
                     return True
             else:
                 if card.rank + 1 == descCard.rank:
-                    print("Desc card is playable")
                     self.scorePiles["desc" + card.suit].append(self.piles[pile].pop())
                     return True
         return False

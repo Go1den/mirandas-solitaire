@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, Toplevel
+from tkinter import Frame, Label, Toplevel, TOP
 
 from card import Card
 from windows.windowHelper import WindowHelper
@@ -11,15 +11,13 @@ class WhichPileWindow:
         self.card2 = card2
         self.parent = parent
 
-        self.gridFrames()
-        self.labelAsc = Label(self.frame, image=self.card1.image)
-        self.labelDesc = Label(self.frame, image=self.card2.image)
-
-        self.labels = [self.labelAsc, self.labelDesc]
-
         self.frame = Frame(self.window)
+        self.gridFrames()
+        self.labelAsc = Label(self.frame, image=self.card1.image, text="Ascending", compound=TOP)
+        self.labelDesc = Label(self.frame, image=self.card2.image, text="Descending", compound=TOP)
+        self.labels = None
 
-        WindowHelper.initializeWindow(self.window, self.parent, 300, 200, 100, 100, "Select pile to play on.")
+        WindowHelper.initializeWindow(self.window, self.parent, 210, 200, 430, 30, "Select pile to play on.")
         self.addCards()
         WindowHelper.finalizeWindow(self.window, self.parent)
 
@@ -33,7 +31,8 @@ class WhichPileWindow:
         self.labelAsc.grid(row=1, column=0, padx=4, pady=4)
         self.labelDesc.bind("<Button-1>", self.selectPile)
         self.labelDesc.grid(row=1, column=1, padx=4, pady=4)
+        self.labels = [self.labelAsc, self.labelDesc]
 
     def selectPile(self, e):
-        self.parent.playArea.selectedPile = self.labels.index(e) + 1
+        self.parent.playArea.selectedPile = self.labels.index(e.widget) + 1
         self.window.destroy()
