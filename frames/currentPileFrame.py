@@ -2,16 +2,21 @@ from tkinter import Frame, Label, GROOVE
 
 class CurrentPileFrame:
     def __init__(self, parent):
-        self.frame = Frame(parent.window, relief=GROOVE, bd=2)
+        self.frame = Frame(parent.window, relief=GROOVE, bd=2, width=640, height=140)
         self.parent = parent
+
+        labelCurrentPile = Label(self.frame, text="Current Pile")
+        labelCurrentPile.place(relx=0.9, rely=0.01)
 
         self.labels = []
 
     def selectNewPile(self, cards):
+        labelCurrentPile = Label(self.frame, text="Current Pile")
+        labelCurrentPile.place(relx=0.9, rely=0.01)
         for card in cards:
             label = Label(self.frame, image=card.image)
             label.bind("<Button-1>", self.playCard)
-            label.grid(row=0, column=cards.index(card), padx=4, pady=4)
+            label.place(x=4+(40*(cards.index(card))), y=4)
             self.labels.append(label)
 
     def clear(self):

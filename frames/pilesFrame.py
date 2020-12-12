@@ -65,7 +65,7 @@ class PilesFrame:
                 label.configure(image=self.blankImage)
 
     def updatePileImage(self, pile):
-        if len(self.parent.playArea.piles[pile]) > 0:
+        if self.parent.playArea.currentPile != pile and len(self.parent.playArea.piles[pile]) > 0:
             self.labels[pile-1].configure(image=self.parent.playArea.piles[pile][-1].image)
         else:
             self.labels[pile-1].configure(image=self.blankImage)

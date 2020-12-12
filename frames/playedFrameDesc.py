@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, GROOVE
+from tkinter import Frame, Label, GROOVE, CENTER
 
 from PIL import ImageTk, Image
 
@@ -20,14 +20,16 @@ class PlayedFrameDesc:
         self.initializeFrame()
 
     def initializeFrame(self):
+        labelDescPiles = Label(self.frame, text="Descending Piles", anchor=CENTER)
+        labelDescPiles.grid(row=0, column=0, columnspan=4, padx=4)
         self.labelPile1 = Label(self.frame, image=self.hiHeartImage)
-        self.labelPile1.grid(row=0, column=0, padx=8, pady=8)
+        self.labelPile1.grid(row=1, column=0, padx=8, pady=4)
         self.labelPile2 = Label(self.frame, image=self.hiDiamondImage)
-        self.labelPile2.grid(row=0, column=1, padx=8, pady=8)
+        self.labelPile2.grid(row=1, column=1, padx=8, pady=4)
         self.labelPile3 = Label(self.frame, image=self.hiClubImage)
-        self.labelPile3.grid(row=0, column=2, padx=8, pady=8)
+        self.labelPile3.grid(row=1, column=2, padx=8, pady=4)
         self.labelPile4 = Label(self.frame, image=self.hiSpadeImage)
-        self.labelPile4.grid(row=0, column=3, padx=8, pady=8)
+        self.labelPile4.grid(row=1, column=3, padx=8, pady=4)
 
     def updateAllImages(self):
         self.labelPile1.configure(image=self.parent.playArea.scorePiles["descH"][-1].image)

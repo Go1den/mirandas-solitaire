@@ -17,7 +17,7 @@ class WhichPileWindow:
         self.labelDesc = Label(self.frame, image=self.card2.image, text="Descending", compound=TOP)
         self.labels = None
 
-        WindowHelper.initializeWindow(self.window, self.parent, 210, 200, 430, 30, "Select pile to play on.")
+        WindowHelper.initializeWindow(self.window, self.parent, 196, 160, 322, 270, "Select pile to play on.")
         self.addCards()
         WindowHelper.finalizeWindow(self.window, self.parent)
 
@@ -25,12 +25,10 @@ class WhichPileWindow:
         self.frame.grid(row=0, padx=4, pady=4)
 
     def addCards(self):
-        labelWhich = Label(self.frame, text="Which pile do you want to play on?")
-        labelWhich.grid(row=0, column=0, columnspan=2, padx=4, pady=4)
         self.labelAsc.bind("<Button-1>", self.selectPile)
-        self.labelAsc.grid(row=1, column=0, padx=4, pady=4)
+        self.labelAsc.grid(row=0, column=0, padx=4, pady=4)
         self.labelDesc.bind("<Button-1>", self.selectPile)
-        self.labelDesc.grid(row=1, column=1, padx=4, pady=4)
+        self.labelDesc.grid(row=0, column=1, padx=4, pady=4)
         self.labels = [self.labelAsc, self.labelDesc]
 
     def selectPile(self, e):
