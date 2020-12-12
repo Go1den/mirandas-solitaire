@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, GROOVE
+from tkinter import Frame, Label, GROOVE, CENTER, messagebox
 
 from PIL import ImageTk, Image
 
@@ -53,7 +53,15 @@ class PilesFrame:
                 self.labels[cards[0].rank - 1].configure(image=self.blankImage)
                 self.parent.currentPileFrame.selectNewPile(cards)
             if len(self.parent.playArea.drawPile) == 0:
-                self.labelDrawPile.configure(image=self.blankImage)
+                self.labelDrawPile.configure(image=self.blankImage, text="Close\nLast\nPile", compound=CENTER)
+        elif self.labelDrawPile.cget("text") == "Close\nLast\nPile":
+            self.parent.currentPileFrame.clear()
+            self.parent.pilesFrame.updateAllImages()
+            self.parent.playArea.currentPile = 0
+            self.parent.currentPileFrame.selectNewPile([])
+            self.labelDrawPile.configure(image=self.blankImage, text="", compound=None)
+            if self.isGameInFinalPhase():
+                messagebox.showinfo("Draw Pile Exhausted", "You have run out of cards in the draw pile. You may now move cards between ascending and descending piles.")
 
     def updateAllImages(self):
         index = 0
@@ -69,3 +77,6 @@ class PilesFrame:
             self.labels[pile-1].configure(image=self.parent.playArea.piles[pile][-1].image)
         else:
             self.labels[pile-1].configure(image=self.blankImage)
+
+    def isGameInFinalPhase(self):
+        return len(self.parent.playArea.drawPile) == 0 and self.labelDrawPile.cget("text") == ""
