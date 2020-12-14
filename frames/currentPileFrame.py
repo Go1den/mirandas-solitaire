@@ -18,6 +18,8 @@ class CurrentPileFrame:
             label.bind("<Button-1>", self.playCard)
             label.place(x=4+(40*(cards.index(card))), y=4)
             self.labels.append(label)
+        if self.parent.playArea.currentPile > 0:
+            self.parent.pilesFrame.labels[self.parent.playArea.currentPile - 1].configure(text=str(len(cards)))
 
     def clear(self):
         for widget in self.frame.winfo_children():
@@ -32,5 +34,6 @@ class CurrentPileFrame:
             self.selectNewPile(cards)
             self.parent.playedFrameAsc.updateAllImages()
             self.parent.playedFrameDesc.updateAllImages()
+            self.parent.pilesFrame.labels[self.parent.playArea.currentPile-1].configure(text=str(len(cards)))
 
 

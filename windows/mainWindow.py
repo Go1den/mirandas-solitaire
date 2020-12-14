@@ -35,7 +35,7 @@ class MainWindow:
 
     def initializeWindow(self):
         # self.window.iconbitmap(FileConstants.STREAMOPENER_ICON)
-        self.window.geometry('840x620')
+        self.window.geometry('840x650')
         self.window.title("Miranda's Solitaire")
         self.window.resizable(width=False, height=False)
 
