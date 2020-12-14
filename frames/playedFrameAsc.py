@@ -25,12 +25,16 @@ class PlayedFrameAsc:
         labelAscPiles = Label(self.frame, text="Ascending Piles", anchor=CENTER)
         labelAscPiles.grid(row=0, column=0, columnspan=4, padx=4)
         self.labelPile1 = Label(self.frame, image=self.loHeartImage)
+        self.labelPile1.bind("<Button-1>", lambda x: self.onPileClick("H"))
         self.labelPile1.grid(row=1, column=0, padx=8, pady=4)
         self.labelPile2 = Label(self.frame, image=self.loDiamondImage)
+        self.labelPile2.bind("<Button-1>", lambda x: self.onPileClick("D"))
         self.labelPile2.grid(row=1, column=1, padx=8, pady=4)
         self.labelPile3 = Label(self.frame, image=self.loClubImage)
+        self.labelPile3.bind("<Button-1>", lambda x: self.onPileClick("C"))
         self.labelPile3.grid(row=1, column=2, padx=8, pady=4)
         self.labelPile4 = Label(self.frame, image=self.loSpadeImage)
+        self.labelPile4.bind("<Button-1>", lambda x: self.onPileClick("S"))
         self.labelPile4.grid(row=1, column=3, padx=8, pady=4)
 
     def updateAllImages(self):
@@ -38,3 +42,9 @@ class PlayedFrameAsc:
         self.labelPile2.configure(image=self.parent.playArea.scorePiles["ascD"][-1].image)
         self.labelPile3.configure(image=self.parent.playArea.scorePiles["ascC"][-1].image)
         self.labelPile4.configure(image=self.parent.playArea.scorePiles["ascS"][-1].image)
+
+    def onPileClick(self, pile):
+        if self.parent.pilesFrame and self.parent.pilesFrame.isGameInFinalPhase() and self.parent.playArea.scorePiles["desc" + pile][-1].rank == self.parent.playArea.scorePiles["asc" + pile][-1].rank + 1:
+            self.parent.playArea.scorePiles["desc" + pile].append(self.parent.playArea.scorePiles["asc" + pile].pop())
+            self.updateAllImages()
+            self.parent.playedFrameDesc.updateAllImages()

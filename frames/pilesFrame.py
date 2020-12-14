@@ -2,6 +2,8 @@ from tkinter import Frame, Label, GROOVE, CENTER, messagebox
 
 from PIL import ImageTk, Image
 
+from windows.endOfDrawPileWindow import EndOfDrawPileWindow
+
 class PilesFrame:
     def __init__(self, parent):
         self.frame = Frame(parent.window, relief=GROOVE, bd=2)
@@ -61,7 +63,8 @@ class PilesFrame:
             self.parent.currentPileFrame.selectNewPile([])
             self.labelDrawPile.configure(image=self.blankImage, text="", compound=None)
             if self.isGameInFinalPhase():
-                messagebox.showinfo("Draw Pile Exhausted", "You have run out of cards in the draw pile. You may now move cards between ascending and descending piles.")
+                EndOfDrawPileWindow(self.parent)
+                # messagebox.showinfo("Draw Pile Exhausted", "You have run out of cards in the draw pile. You may now move cards between ascending and descending piles.")
 
     def updateAllImages(self):
         index = 0
