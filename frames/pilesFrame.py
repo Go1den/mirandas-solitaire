@@ -1,4 +1,4 @@
-from tkinter import Frame, Label, GROOVE, CENTER, messagebox
+from tkinter import Frame, Label, GROOVE, CENTER
 
 from PIL import ImageTk, Image
 
@@ -9,7 +9,7 @@ class PilesFrame:
         self.frame = Frame(parent.window, relief=GROOVE, bd=2)
         self.parent = parent
 
-        self.cardBackImage = ImageTk.PhotoImage(Image.open("cards/red_back.png"))
+        self.cardBackImage = ImageTk.PhotoImage(Image.open(self.parent.deckColor.get()))
         self.blankImage = ImageTk.PhotoImage(Image.open("cards/blank.png"))
 
         self.labels = []
@@ -64,7 +64,6 @@ class PilesFrame:
             self.labelDrawPile.configure(image=self.blankImage, text="", compound=None)
             if self.isGameInFinalPhase():
                 EndOfDrawPileWindow(self.parent)
-                # messagebox.showinfo("Draw Pile Exhausted", "You have run out of cards in the draw pile. You may now move cards between ascending and descending piles.")
 
     def updateAllImages(self):
         index = 0
@@ -77,9 +76,14 @@ class PilesFrame:
 
     def updatePileImage(self, pile):
         if self.parent.playArea.currentPile != pile and len(self.parent.playArea.piles[pile]) > 0:
-            self.labels[pile-1].configure(image=self.parent.playArea.piles[pile][-1].image)
+            self.labels[pile - 1].configure(image=self.parent.playArea.piles[pile][-1].image)
         else:
-            self.labels[pile-1].configure(image=self.blankImage)
+            self.labels[pile - 1].configure(image=self.blankImage)
 
     def isGameInFinalPhase(self):
         return len(self.parent.playArea.drawPile) == 0 and self.labelDrawPile.cget("text") == ""
+
+    def setCardBackImage(self):
+        self.cardBackImage = ImageTk.PhotoImage(Image.open(self.parent.deckColor.get()))
+        if len(self.parent.playArea.drawPile) > 0:
+            self.labelDrawPile.configure(image=self.cardBackImage)
