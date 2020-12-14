@@ -1,21 +1,8 @@
-# mirandas-solitaire
-Solitaire game written in 
+# Miranda's Solitaire
+Miranda's Solitaire is a solitaire game using two decks of cards. The aim of the game is to move all of the cards into 8 piles. Each scoring pile is suited. For each suit, one pile counts upwards from Ace to King, and the other pile counts down from King to Ace. You can play any visible card at any time, as long as it is the next card in line. When you run out of cards to play, you can draw from the deck. The number of the card you draw determines which play area pile you gain full access to. All of the cards in that pile are then playable until you draw another card. When the deck runs out of cards, you can click "Close Last Pile" to move to the endgame. In the endgame, you have the ability to move cards across the scoring piles, but you can no longer open up any of the play area piles.
 
-2 decks
-7 cards in top row, 7 in bottom
-Middle of the bottom is facing down (draw pile)
-Any time you flip over a number card in natural spot, then you add an extra card to face down pile
-Any time you flip an ace up, an extra card in the down pile
-(Ace in the ace spot = 2 cards)
-Every time you get to the draw pile or through the two rows, extra card in the draw pile
-Keep dealing until you run out
+The way the cards are dealt initially is really bizarre. The game deals one card at a time to each pile, but if the card it deals matches the number of the pile it represents, an extra card is added to the draw pile. If that card is an ace, it adds double. It also adds a card every time it "steps over" the draw pile, and every time it cycles back to pile 1. You don't need to know any of this when playing, but if you're wondering why the piles vary in size each game, that's why.
 
-To play:
-Counting up Ace->King in each suit
-Counting down King->Ace in each suit
+Supposedly this is based on a real solitaire game. I can't find any documentation on what the real name of the game is. It also seems to be very difficult in my experience.
 
-To start with, any kings or aces go to the top, and anything that can play on them
-
-When you can't play, Draw from the draw pile, put it at the bottom of that number's pile, then fan those cards out and play any that play from that fanned pile or any of the other tops of the other piles
-
-When you run out of draw pile cards, you can trade cards across the scored piles to try to produce a new valid play
+This game was coded entirely in Python using tkinter for graphical display. The code is open source and should prove to be a decent teacher of tkinter if you're interested in learning.
