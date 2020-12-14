@@ -7,6 +7,8 @@ from frames.pilesFrame import PilesFrame
 from frames.playedFrameAsc import PlayedFrameAsc
 from frames.playedFrameDesc import PlayedFrameDesc
 from playArea import PlayArea
+from windows.aboutWindow import AboutWindow
+from windows.howToPlayWindow import HowToPlayWindow
 
 class MainWindow:
     def __init__(self):
@@ -70,6 +72,11 @@ class MainWindow:
         colorMenu.add_radiobutton(label="Red", value="cards/red_back.png", variable=self.deckColor, command=lambda: self.pilesFrame.setCardBackImage())
         colorMenu.add_radiobutton(label="Yellow", value="cards/yellow_back.png", variable=self.deckColor, command=lambda: self.pilesFrame.setCardBackImage())
         menu.add_cascade(label="Deck Color", menu=colorMenu)
+
+        helpMenu = Menu(menu, tearoff=0)
+        helpMenu.add_command(label="How To Play", command=lambda: HowToPlayWindow(self))
+        helpMenu.add_command(label="About", command=lambda: AboutWindow(self))
+        menu.add_cascade(label="Help", menu=helpMenu)
 
         self.window.config(menu=menu)
 
